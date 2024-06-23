@@ -1,2 +1,0 @@
-set(__QT_DEPLOY_TARGET_BBTonboAssitant_FILE /Users/zhoutianpeng/Muge/project/BBTonboAssitant/build/Desktop_arm_darwin_generic_mach_o_64bit-Debug/BBTonboAssitant.app/Contents/MacOS/BBTonboAssitant)
-set(__QT_DEPLOY_TARGET_BBTonboAssitant_TYPE EXECUTABLE)
