@@ -9,14 +9,21 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# TODO 支持x86 macOS
+SET(BBTonbo_3RDPARTY_LIBRARY_FOLDER "")
+if(MSVC)
+  SET(BBTonbo_3RDPARTY_LIBRARY_FOLDER "win/")
+elseif(APPLE)
+ SET(BBTonbo_3RDPARTY_LIBRARY_FOLDER "macos/")
+endif()
+message("building use 3rd libraries ${BBTonbo_3RDPARTY_LIBRARY_FOLDER}")
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Multimedia)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Multimedia)
-
+include(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/CMakeLists.txt)
 
 set(PROJECT_SOURCES
         src/main.cpp
-
-
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -43,6 +50,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Info.plist
         src/base/ThreadSafeQueue.h
         src/util/BBTonboAudioConverter.h
+        thirdparty/CMakeLists.txt
+        src/audio/asr/BBTonboAsr.h
+
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET BBTonboAssitant APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
