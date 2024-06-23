@@ -1,8 +1,11 @@
 #include "./BBTonboSession.h"
 
+#include <iostream>
+
 
 BBTonboSession::BBTonboSession() : m_running(false) {
     m_audioWorker = new BBTonboAudioWorker();
+    m_queue = new ThreadSafeQueue<AudioData>();
     startSession();
 }
 
@@ -10,6 +13,9 @@ BBTonboSession::~BBTonboSession() {
     stopSession();
 }
 
+void BBTonboSession::send(const AudioData& audioData) {
+    m_queue->push(audioData);
+}
 
 void BBTonboSession::startSession() {
     if (!m_running) {
@@ -30,9 +36,9 @@ void BBTonboSession::stopSession() {
 
 void BBTonboSession::run() {
     while (m_running) {
-        // 执行循环的工作，比如处理音频数据
-
-        // 你可以在这里添加一个 sleep 或 wait 来减少 CPU 的使用
-        // std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        AudioData audioData;
+        m_queue->waitAndPop(audioData);
+        // std::cout << audioData.buffer.size() << std::endl;
     }
 }
+

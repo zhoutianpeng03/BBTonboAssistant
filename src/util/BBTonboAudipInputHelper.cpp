@@ -19,6 +19,7 @@ BBTonboAudioInputHelper::~BBTonboAudioInputHelper() {
     delete audioInput;
 }
 
+
 void BBTonboAudioInputHelper::initializeAudioFormat() {
     format.setSampleRate(16000);
     format.setChannelCount(1);
@@ -57,5 +58,6 @@ void BBTonboAudioInputHelper::handleReadyRead() {
     if (!audioDevice) return;
 
     QByteArray soundData = audioDevice->readAll();
-    qDebug() << "Audio data size:" << soundData.size();
+    emit audioDataAvailable(soundData);
+    // qDebug() << "Audio data size:" << soundData.size();
 }
